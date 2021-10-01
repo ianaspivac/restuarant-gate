@@ -1,0 +1,29 @@
+version: '3'
+
+networks:
+  main_network:
+    driver: bridge
+
+services:
+  kitchen:
+    build:
+      context: ./kitchen
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8081"
+    expose:
+      - "8081"
+    networks:
+      - main_network
+  dining:
+    build:
+      context: ./dinning-hall
+      dockerfile: ./Dockerfile
+    depends_on:
+      - kitchen
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    networks:
+      - main_network
